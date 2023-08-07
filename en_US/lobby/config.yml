@@ -1,0 +1,108 @@
+
+
+debug: false
+
+# Statistics Settings
+# This option is used to help developers count plug-in versions and usage, and it will never affect performance and user experience.
+# Of course, you can also choose to turn it off here for this plugin,
+# or turn it off for all plugins in the configuration file under "plugins/bStats".
+metrics: true
+
+# Check update settings
+# This option is used by the plug-in to determine whether to check for updates.
+# If you do not want the plug-in to check for updates and prompt you, you can choose to close.
+# Checking for updates is an asynchronous operation that will never affect performance and user experience.
+check-update: true
+
+
+# Database Configuration
+#   Used to provide database connection for data operation.
+database:
+  driver: com.mysql.cj.jdbc.Driver
+  host: 127.0.0.1
+  port: 3306
+  database: test
+  username: root
+  password: passwd
+  extra: ?sslMode=DISABLED
+  table-prefix: votepass_
+
+time:
+  auto-close: 15d
+  admin-intervention: 7d
+
+page-items:
+  previous-page:
+    material: ARROW
+    name: '&fPrevious page'
+    lore:
+    - ' '
+    - '&f  Left click to view the previous page.'
+    - '&f  Right click to view the first page.'
+    - ' '
+  next-page:
+    material: ARROW
+    name: '&fNext page'
+    lore:
+    - ' '
+    - '&f  Left click to view the next page.'
+    - '&f  Right click to view the last page.'
+    - ' '
+
+servers:
+  folder-name: servers
+  disabled: []
+
+rules:
+  book:
+    accept:
+    - '[&a&l[ACCEPT THE RULE]](hover=&fClick to &a&lconfirm and accept the server rules&f.
+      run_command=/votepass accept %(server))'
+    deny:
+    - '[&c&l[DENY THE RULE]](hover=&fClick to &c&lrefuse the server rules&f. run_command=/votepass
+      deny %(server))'
+
+answering:
+  title: '&a&lRequest &8| &f%(server)'
+  book-item:
+    slot: 8
+    name: '&c&lAnswering book &8(Right click)'
+    lore:
+    - '&fOpen and answer your questions!'
+  items:
+    required:
+      material: WRITABLE_BOOK
+      name: '&8Q: &f%(title)'
+      lore:
+      - ' '
+      - '#description#'
+      - ' '
+      - '&e&l● &eClick and answer!'
+    finished:
+      material: WRITTEN_BOOK
+      name: '&8Q: &f%(title)'
+      lore:
+      - ' '
+      - '#description#'
+      - ' '
+      - '&a&l✔ &aAnswer finished.'
+      - '&7&oClick to edit your answer.'
+    confirm:
+      material: EMERALD
+      name: '&a&lConfirm and submit the request'
+      lore:
+      - ' '
+      - '&fClick to confirm and submit your request.'
+    cancel:
+      material: REDSTONE
+      name: '&c&lCancel the request'
+      lore:
+      - ' '
+      - '&fClick to cancel your request.'
+    pending:
+      material: BARRIER
+      name: '&e&lPlease answer all the questions'
+      lore:
+      - ' '
+      - '&fAfter answered all the questions,'
+      - '&fthat you can submit your request to the server users.'

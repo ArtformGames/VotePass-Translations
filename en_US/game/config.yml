@@ -1,0 +1,411 @@
+
+
+debug: false
+
+# Statistics Settings
+# This option is used to help developers count plug-in versions and usage, and it will never affect performance and user experience.
+# Of course, you can also choose to turn it off here for this plugin,
+# or turn it off for all plugins in the configuration file under "plugins/bStats".
+metrics: true
+
+# Check update settings
+# This option is used by the plug-in to determine whether to check for updates.
+# If you do not want the plug-in to check for updates and prompt you, you can choose to close.
+# Checking for updates is an asynchronous operation that will never affect performance and user experience.
+check-update: true
+
+
+# Database Configuration
+#   Used to provide database connection for data operation.
+database:
+  driver: com.mysql.cj.jdbc.Driver
+  host: 127.0.0.1
+  port: 3306
+  database: test
+  username: root
+  password: passwd
+  extra: ?sslMode=DISABLED
+  table-prefix: votepass_
+
+time:
+  auto-close: 15d
+  admin-intervention: 7d
+
+page-items:
+  previous-page:
+    material: ARROW
+    name: '&fPrevious page'
+    lore:
+    - ' '
+    - '&f  Left click to view the previous page.'
+    - '&f  Right click to view the first page.'
+    - ' '
+  next-page:
+    material: ARROW
+    name: '&fNext page'
+    lore:
+    - ' '
+    - '&f  Left click to view the next page.'
+    - '&f  Right click to view the last page.'
+    - ' '
+
+server:
+  # The identify of this server
+  # Used for request and whitelist data
+  id: survival
+  # Auto pass ratio, when the ratio of the passed vote is greater than the value,
+  # the vote will be automatically passed, below zero means disabled auto pass.
+  # You can configure different ratio based on different total votable players.
+  auto-pass-ratio:
+    '5': '0.8'
+    '20': '0.6'
+  # Active user last online time
+  # Only users that have been online within this time will be counted as active users.
+  # And only active users will be count when auto pass handling.
+  active-online-time: 7d
+  # Periods that sync the new requests
+  # This value should not be lower than 10 seconds.
+  # If periods value ≤0 , the new requests will only be synced by execute 'votepass sync' command
+  sync-period: 3m
+  # Periods that notify players to handle requests
+  notify-period: 15m
+  # The kick message when the player is not in the whitelist.
+  kick-message:
+  - You are not in the whitelist, please request to join the whitelist.
+  # Whether to restrict administrators to managing only requests that require intervention.
+  manage-restrict: false
+
+sounds:
+  notify: ENTITY_VILLAGER_CELEBRATE
+  abstain: ENTITY_VILLAGER_HURT
+  approved: ENTITY_VILLAGER_CELEBRATE
+  reject: ENTITY_VILLAGER_NO
+
+guis:
+  abstain-toggle:
+    enabled:
+    - '&8Your current status is'
+    - '&e&labstaining all vote rights&8.'
+    - ' '
+    - '&7&oYou will not be calculated in server''s whitelist review results.'
+    - '&8Exercising voting rights should be something every member should do.'
+    - ' '
+    disabled:
+    - '&8Your current status is'
+    - '&a&lParticipating in voting&8.'
+    - ' '
+    - '&7Thank you for your active participation in server management.'
+    - ' '
+    - ' '
+    toggle:
+    - You can choose whether to automatically waive all future requests.
+    - ' '
+    - '[&a&l[I''d like to vote]](hover=Click to return to participating in voting. run_command=/votepass
+      abstain disable)'
+    - '[&e&l[Abstain all]](hover=Click to abstain all future votes. run_command=/votepass
+      abstain enable)'
+  request-list:
+    title: '&a&lAll Requests'
+    items:
+      info:
+        material: PLAYER_HEAD
+        name: '&7#%(request_id) &e&l%(name)'
+        lore:
+        - ' '
+        - '&7Request form &e&l%(name)'
+        - '&7UUID: &e%(uuid)'
+        - '&7'
+        - '&7Contain words: &e%(request_words)'
+        - '&7Submit time: &e%(create_time)'
+        - '&7Close time: &e%(close_time)'
+        - ' '
+        - '&f✔ &a&lApproved&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)'
+        - '&f✘ &c&lRejected&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)'
+        - '&f◮ &e&lAbstained&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)'
+        - ' '
+        - '&a ▶ Left  click &8|&f view details'
+        - '&a ▶ Right click &8|&f quick review'
+  request-comments:
+    title: '&e&lComments &7| Request #&f%(id)'
+    items:
+      info:
+        material: PLAYER_HEAD
+        name: '&7#%(request_id) &e&l%(name)'
+        lore:
+        - ' '
+        - '&7Request form &e&l%(name)'
+        - '&7UUID: &e%(uuid)'
+        - '&7'
+        - '&7Contain words: &e%(request_words)'
+        - '&7Submit time: &e%(create_time)'
+        - '&7Close time: &e%(close_time)'
+        - ' '
+        - '&f✔ &a&lApproved&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)'
+        - '&f✘ &c&lRejected&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)'
+        - '&f◮ &e&lAbstained&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)'
+        - ' '
+        - ' &a ▶ Click &8|&f Return to the request details page'
+      approved:
+        material: GREEN_STAINED_GLASS_PANE
+        name: '&7Comment from &f%(voter)'
+        lore:
+        - ' '
+        - '&7&oThis player approved this request'
+        - '&7&oat &f&o%(time)'
+        - ' '
+        - '&f%(content)'
+        - ' '
+      rejected:
+        material: RED_STAINED_GLASS_PANE
+        name: '&7Comment from &f%(voter)'
+        lore:
+        - ' '
+        - '&7&oThis player rejected this request'
+        - '&7&oat &f&o%(time)'
+        - ' '
+        - '&f%(content)'
+        - ' '
+  quick-review:
+    overview:
+    - 'Handle request #%(request_id)'
+    - ' '
+    - '&7Applicant username'
+    - '&6%(name)'
+    - ' '
+    - '&a&lApproved&7: %(pros_amount)&8(%(pros_ratio)%)'
+    - '&c&lRejected&7: %(cons_amount)&8(%(cons_ratio)%)'
+    - '&e&lAbstain&7: %(abstains_amount)&8(%(abstains_ratio)%)'
+    - ' '
+    - '&8Please turn to the next page for detailed answers.'
+    answer-empty:
+    - '&8#%(index): &0%(question)'
+    - ' '
+    - '&7&oThis user did not answer the question.'
+    - '&8Please keep turning the page to see other answers.'
+    answer-content:
+    - '&8#%(index): &0%(question)'
+    - ' '
+    - '&8This user answered %(words) words,'
+    - '&8Please keep turning the page to see his answers.'
+    has-comments:
+    - '&8This request has a total of %(amount) comments,'
+    - ' '
+    - '&7&oIf you want to express your personal opinion, please return to process this
+      request in the next page.'
+    - '&8Please keep turning the page to see others opinions.'
+    none-comment:
+    - '&8There are currently no other votes on this request.'
+    - ' '
+    - '&7&oIf you want to express your personal opinion, please return to process this
+      request in the next page.'
+    comment-approved:
+    - '&8#%(index) &7from &9%(voter)'
+    - ' '
+    - '&7This vote is &a&lApproved &7.'
+    - '&8'
+    - '&8%(comment)'
+    comment-rejected:
+    - '&8#%(index) &7from &9%(voter)'
+    - ' '
+    - '&7This vote is &C&lRejected&7.'
+    - '&8'
+    - '&8%(comment)'
+    return:
+    - All answers have been displayed, please click the text below to go to the detailed
+      interface for processing.
+    - ' '
+    - '[&a&l[Handle request]](hover=Click to return to the details page and continue processing
+      related answers. run_command=/votepass handle %(id))'
+  vote-handle:
+    title: '&a&lHandle Request &7#%(id)'
+    items:
+      info:
+        material: PLAYER_HEAD
+        name: '&7#%(request_id) &e&l%(name)'
+        lore:
+        - ' '
+        - '&7Request form &e&l%(name)'
+        - '&7UUID: &e%(uuid)'
+        - '&7'
+        - '&7Contain words: &e%(request_words)'
+        - '&7Submit time: &e%(create_time)'
+        - '&7Close time: &e%(close_time)'
+        - ' '
+        - '&f✔ &a&lApproved&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)'
+        - '&f✘ &c&lRejected&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)'
+        - '&f◮ &e&lAbstained&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)'
+      approve:
+        material: GREEN_STAINED_GLASS_PANE
+        name: '&a&lApprove &fthe request &8#&f%(id)'
+      abstain:
+        material: GREEN_STAINED_GLASS_PANE
+        name: '&e&lAbstain &ffrom voting'
+      reject:
+        material: RED_STAINED_GLASS_PANE
+        name: '&c&lReject &fthe request &8#&f%(id)'
+      not-commented:
+        material: PAPER
+        name: '&f&lPersonal comments'
+        lore:
+        - ' '
+        - '&fThis request now has &E%(amount) &fcomments.'
+        - ' '
+        - '&7&oYou have not commented for this request,'
+        - '&7&oGood comment can help others to make a decision.'
+        - ' '
+        - '&a ▶ Left  click &8|&f View other''s comments'
+        - '&a ▶ Right click &8|&f Write your comment'
+      commented:
+        material: PAPER
+        name: '&f&lPersonal comments'
+        lore:
+        - ' '
+        - '&fThis request now has &E%(amount) &fcomments.'
+        - ' '
+        - '&7&oYou commented:'
+        - '&f %(comment)'
+        - ' '
+        - '&a ▶ Left  click &8|&f View other''s comments'
+        - '&a ▶ Right click &8|&f Edit your comment'
+      answer:
+        material: BOOK
+        name: '&7Question: &f%(question)'
+        lore:
+        - ' '
+        - '&fThis answer contains &e%(words) &fwords.'
+        - ' '
+        - '&a ▶ Click &8|&f View answer contents'
+    book:
+      return:
+      - All answers have been displayed.
+      - '[Click here](hover=Click to return to the details page and continue processing
+        related answers. run_command=/votepass handle %(id)) to return to the request details
+        page.'
+  vote-confirm:
+    title: '&a&lConfirm to vote for Request &7#%(id)'
+    items:
+      info:
+        material: PLAYER_HEAD
+        name: '&7#%(request_id) &e&l%(name)'
+        lore:
+        - ' '
+        - '&7Request form &e&l%(name)'
+        - '&7UUID: &e%(uuid)'
+        - '&7'
+        - '&7Contain words: &e%(request_words)'
+        - '&7Submit time: &e%(create_time)'
+        - '&7Close time: &e%(close_time)'
+        - ' '
+        - '&f✔ &a&lApproved&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)'
+        - '&f✘ &c&lRejected&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)'
+        - '&f◮ &e&lAbstained&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)'
+      approved:
+        material: EMERALD
+        name: '&7You decision is &a&lApproved'
+        lore:
+        - ' '
+        - '&fYou will vote ''&a&lApproved&f'''
+        - '&fto player &e%(player) &f''s request'
+        - ' '
+      abstained:
+        material: COAL
+        name: '&7You decision is &e&lAbstained'
+        lore:
+        - ' '
+        - '&fYou have given up your right to vote this time.'
+        - ' '
+      rejected:
+        material: REDSTONE
+        name: '&7You decision is &c&lRejected'
+        lore:
+        - ' '
+        - '&fYou will vote ''&c&lRejected&f'''
+        - '&fto player &e%(player) &f''s request'
+        - ' '
+      confirm:
+        material: GREEN_STAINED_GLASS_PANE
+        name: '&a&lConfirm your vote'
+      cancel:
+        material: RED_STAINED_GLASS_PANE
+        name: '&7Consider later'
+      not-commented:
+        material: PAPER
+        name: '&f&lPersonal comments'
+        lore:
+        - ' '
+        - '&7&oYou have not commented for this request,'
+        - '&7&oGood comment can help others to make a decision.'
+      commented:
+        material: PAPER
+        name: '&f&lPersonal comments'
+        lore:
+        - ' '
+        - '&7&oYou commented:'
+        - '&f %(comment)'
+        - ' '
+  admin-manage:
+    title: '&a&lManage Requests'
+    items:
+      info:
+        material: PLAYER_HEAD
+        name: '&7#%(request_id) &e&l%(name)'
+        lore:
+        - ' '
+        - '&7Request form &e&l%(name)'
+        - '&7UUID: &e%(uuid)'
+        - '&7'
+        - '&7Contain words: &e%(request_words)'
+        - '&7Submit time: &e%(create_time)'
+        - '&7Close time: &e%(close_time)'
+        - ' '
+        - '&f✔ &a&lApproved&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)'
+        - '&f✘ &c&lRejected&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)'
+        - '&f◮ &e&lAbstained&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)'
+        - ' '
+        - '&a ▶ Click &8|&f Manage this request'
+  admin-handle:
+    title: '&a&lHandle Request &7#%(id)'
+    items:
+      info:
+        material: PLAYER_HEAD
+        name: '&7#%(request_id) &e&l%(name)'
+        lore:
+        - ' '
+        - '&7Request form &e&l%(name)'
+        - '&7UUID: &e%(uuid)'
+        - '&7'
+        - '&7Contain words: &e%(request_words)'
+        - '&7Submit time: &e%(create_time)'
+        - '&7Close time: &e%(close_time)'
+        - ' '
+        - '&f✔ &a&lApproved&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)'
+        - '&f✘ &c&lRejected&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)'
+        - '&f◮ &e&lAbstained&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)'
+      approve:
+        material: GREEN_STAINED_GLASS_PANE
+        name: '&a&lApprove &fthe request &8#&f%(id)'
+      reject:
+        material: RED_STAINED_GLASS_PANE
+        name: '&c&lReject &fthe request &8#&f%(id)'
+      commented:
+        material: PAPER
+        name: '&f&lRequest comments'
+        lore:
+        - ' '
+        - '&fThis request now has &E%(amount) &fcomments.'
+        - ' '
+        - '&a ▶ Click &8|&f View other''s comments'
+      answer:
+        material: BOOK
+        name: '&7Question: &f%(question)'
+        lore:
+        - ' '
+        - '&fThis answer contains &e%(words) &fwords.'
+        - ' '
+        - '&a ▶ Click &8|&f View answer contents'
+    book:
+      return:
+      - All answers have been displayed.
+      - '[Click here](hover=Click to return to the details page and continue processing
+        related answers. run_command=/votepass manage %(id)) to return to the request details
+        page.'
