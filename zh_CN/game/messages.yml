@@ -1,0 +1,145 @@
+# VotePass-Game-messages
+# 翻译版本: 1.0.2
+# 插件作者: ArtformGames
+# 翻译工作: MingGRE
+# 项目地址: https://github.com/ArtformGames/VotePass
+
+no-permission:
+  - "&c&l抱歉! &f你没有权限这么做!"
+
+load-failed:
+  - "&c&l抱歉! &f你的白名单数据加载失败，请尝试重新加入!"
+
+only-player:
+  - "&c&l抱歉! &f这个指令只能由玩家执行!"
+
+wrong-number:
+  - "&c&l抱歉! &f请输入正确的序号!"
+
+not-exists:
+  - "&c&l抱歉! &f没有找到序号为 &e#%(id) &f的申请!"
+
+# 重载插件
+reload:
+  start:
+    - "&f正在重载插件配置..."
+  success:
+    - "&a&l重载成功! &f用时 &a%(time)&fms."
+  failed:
+    - "&c&l重载失败! &f请检查插件配置."
+
+# 命令提示
+command:
+  # 玩家
+  user:
+    - "&e&lVotePass &fCommands &7(/votepass)"
+    - "&8#&f requests"
+    - "&8-&7 查看你未参与投票的白名单请求."
+    - "&8#&f handle &e<问卷ID>"
+    - "&8-&7 处理某一问卷请求."
+    - "&8#&f abstain"
+    - "&8-&7 放弃/参与白名单投票."
+  # 管理员
+  admin:
+    - "&8#&f manage"
+    - "&8-&7 打开管理菜单."
+    - "&8#&f sync"
+    - "&8-&7 向数据库同步问卷信息."
+    - "&8#&f migrate"
+    - "&8-&7 原版白名单数据到Votepass"
+    - "&8#&f list"
+    - "&8-&7 列出白名单内的所有玩家."
+    - "&8#&f add <玩家名>"
+    - "&8-&7 手动添加一个玩家到白名单."
+    - "&8#&f remove <username>"
+    - "&8-&7 强制移除一个玩家从白名单."
+    - "&8#&f reload"
+    - "&8-&7 重载插件配置文件."
+
+# 管理员/控制台手动操作提示
+users:
+  never-joined:
+    - "&f玩家 %(name) 从未加入过服务器,"
+    - "&f只有进入过大厅或者该分区的玩家才能够添加到白名单."
+  list:
+    - "&f白名单列表 &7(总共 &F%(total)&7):"
+  user:
+    - "&8- [&f%(name) &7[#%(request)]](hover=&7加入时间: &f%(passed_time)))"
+  already-in:
+    - "&f玩家 %(name) 已经在白名单里了."
+  not-in:
+    - "&f玩家 %(name) 不在白名单里."
+  add:
+    start:
+      - "&f正在添加玩家 %(name) 到白名单里..."
+      - "&f这需要一些时间，请耐心等待."
+    success:
+      - "&a&l添加成功! &f玩家 &e%(name) &f添加到了白名单, 耗时 &a%(time)&fms."
+    failed:
+      - "&c&l添加失败! &f发生了一些错误，请留意控制台."
+  remove:
+    start:
+      - "&f正在删除玩家 %(name) 从白名单里..."
+      - "&f这需要一些时间，请耐心等待."
+    success:
+      - "&a&l删除成功! &f玩家 &e%(name) &f已从白名单中删除, 耗时 &a%(time)&fms."
+    failed:
+      - "&c&l删除失败! &f发生了一些错误，请留意控制台."
+
+# 白名单原版数据迁移提示
+migrate:
+  start:
+    - "&f从 whitelist.json 中迁移数据中..."
+    - "&f这需要一些时间，请耐心等待."
+  success:
+    - "&a&l添加成功! &fThere are %(amount) users added to whitelist, cost &a%(time)&fms."
+  failed:
+    - "&c&l添加失败! &c发生了一些错误，请留意控制台."
+
+# 数据库同步提示
+sync:
+  start:
+    - "&f正在从数据库同步白名单信息..."
+    - "&f这需要一些时间，请耐心等待."
+  success:
+    - "&a&l同步成功! &f共有 %(amount) 个白名单请求同步到服务器, 耗时 &a%(time)&fms."
+
+# 弃权开关提示
+abstain:
+  abstained:
+    - "&f你现在已默认 &c&l弃权 &f所有将来的白名单请求."
+    - "&f你将不再被计数到投票者的人数当中."
+    - "&7&o 你如你想回归到投票者的行列当中，认真履行自己的义务，请输入 &e&l/votepass abstain &7&o来重新加入投票者."
+  participating:
+    - "&f你现在可以参加将来的投票了，感谢你的付出."
+
+# 投票提醒信息
+vote:
+  not-voted:
+    - "&f作为服务器的一员你应当行使你的投票权, 目前你有 &e%(amount) &f 个白名单请求待处理."
+    - "&f你可以 [&6&l点击这里](show_text=打开白名单投票界面
+      run_command=/votepass requests) &f来参与白名单投票."
+  viewing:
+    - "&f你正在查看玩家 &e%(player) &f对于问题 &6%(question) &f的回答,"
+    - "&f你可以 [&6&l点击这里](show_text=点击以查看详细页 run_command=/votepass
+      handle %(id)) &f来回到回答详细页."
+  approved:
+    - "&f你成功投出了 &a&l赞成票 &f 给玩家 &e%(player) &f问卷ID:&8(#%(id))&f!"
+    - "&f 感谢你作为服务器的一员行使投票权来帮助社区迎接更多玩家."
+  rejected:
+    - "&f你成功投出了 &c&l反对票 &f 给玩家 &e%(player) &f问卷ID&8(#%(id))&f!"
+    - "&f 感谢你作为服务器的一员行使投票权来维护社区环境."
+  abstained:
+    - "&f你选择了 &c&l弃权 &f 对于玩家 &e%(player) &f的申请问卷:&8(#%(id))&f,"
+    - "&f你将从本次的投票者中除名且不被记录,这不会影响将来其他请求的投票权."
+    - "&7&o 如果你不想参与到白名单投票的行列当中,你可以输入&e&l/votepass abstain &7&o命令来放弃所有将来的投票权."
+    - "&7&o 不过你之后仍然可以用该命令启用投票."
+admin:
+  sound: ENTITY_VILLAGER_CELEBRATE
+  intervention:
+    - "&f现在仍然有 &e%(amount) &f 个白名单请求因投票超时需要管理员介入."
+    - "&f你可以直接 [&6&l点击这里](show_text=点击打开管理员面板 run_command=/votepass admin) &f打开管理员面板处理."
+  approved:
+    - "&f你成功 &a&l通过 &e%(player) &f的白名单申请,问卷ID: &8(#%(id))&f,投票已自动截止."
+  rejected:
+    - "&f你成功 &c&l驳回 &e%(player) &f的白名单申请,问卷ID: &8(#%(id))&f,投票已自动截止."

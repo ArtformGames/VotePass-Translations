@@ -1,0 +1,84 @@
+# VotePass-Lobby-messages
+# 翻译版本: 1.0.2
+# 插件作者: ArtformGames
+# 翻译工作: MingGRE
+# 项目地址: https://github.com/ArtformGames/VotePass
+
+no-permission:
+  - "&c&l抱歉! &f你没有权限这么做!"
+
+load-failed:
+  - "&c&l抱歉! &f你的白名单数据加载失败，请尝试重新加入!"
+
+only-player:
+  - "&c&l抱歉! &f这个指令只能由玩家执行!"
+
+wrong-number:
+  - "&c&l抱歉! &f请输入正确的序号!"
+
+not-exists:
+  - "&c&l抱歉! &f没有找到序号为 &e#%(id) &f的申请!"
+
+reload:
+  start:
+    - "&f正在重载插件配置..."
+  success:
+    - "&a&l重载成功! &f用时 &a%(time)&fms."
+  failed:
+    - "&c&l重载失败! &f请检查插件配置."
+
+disabled:
+  - "&l抱歉! &f&e%(server) &f 分区的白名单申请尚未开放."
+
+rules:
+  - "&f你必须 &a 理解并且遵循 &6%(name) &f分区规则才能够申请, 请仔细阅读以下规则."
+
+accepted:
+  - "&f你&l必须&r &a理解并且遵循 &6%(name) &f分区规则才能够申请"
+
+rejected:
+  - "&c&l抱歉! &f你的在 &6%(name) &f分区的申请遭到&c&l拒绝&f因此你不能够加入此分区."
+
+whitelisted:
+  - "&f你现在已经拥有 &e%(name) &f分区的白名单了,赶快加入吧~"
+
+pending:
+  - "&f你已经有一个在 &6%(name) &f 分区的白名单申请了,申请ID为: &e%(id)&f ,请耐心等待结果~"
+
+writing:
+  - "&f我们在你的第 &e%(slot) &f格物品栏放置了一本书.问题:&r%(question) &f,"
+  - "&f请右键书本填写你的回答, 并按提示保存回答."
+
+cancelled:
+  - "&f你暂时取消了 &6%(name) &f分区的申请，你可以随时重新填写."
+
+posted:
+  - "&a&l提交成功! &r&6%(name) &f分区的白名单申请已提交. "
+  - "&f申请ID为: &e%(id) &f. 请耐心等待投票结果."
+
+error:
+  - "&f提交申请似乎遇到了一些错误，请联系管理员反馈."
+
+command:
+  user:
+    - "&e&lVotePass &f指令帮助 &7(/votepass)"
+    - "&8#&f request &e<serverID>"
+    - "&8-&7 向某分区申请白名单."
+  admin:
+    - "&8#&f toggle <server>"
+    - "&8-&7 开关某分区的白名单申请."
+    - "&8#&f reload"
+    - "&8-&7 重载插件配置."
+
+feedback:
+  sound: ENTITY_CHICKEN_EGG
+  approved:
+    - "&f 您向 &6%(name) &f分区的白名单申请&8&e[ID:#%(request_id)]&f已被&a&l接受&f，欢迎加入!"
+  rejected:
+    - "&f 您向 &6%(name) &f分区的白名单申请&8&e[ID:#%(request_id)]&f已被&c&l拒绝&f，请仔细阅读分区规则，认真回答，尝试再次申请!"
+
+toggle:
+  disabled:
+    - "&f&6%(name) &f分区白名单成功&c&l禁用&f!"
+  enabled:
+    - "&f&6%(name) &f分区白名单成功&a&l启用&f!"

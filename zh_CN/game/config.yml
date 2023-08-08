@@ -1,0 +1,446 @@
+# VotePass-Game-config-子服端配置
+# 翻译版本: 1.0.2
+# 插件作者: ArtformGames
+# 翻译工作: MingGRE
+# 项目地址: https://github.com/ArtformGames/VotePass
+# 累了就休息会吧~
+
+# 配置内容: 服务器标识ID、数据库连接信息、投票超时配置、投票比例配置、投票权获取条件、音效、UI信息配置（玩家和管理员).
+# 白名单通过步骤: 从数据库同步拉取来自大厅的问卷 → 提示有投票权的玩家参与 → 玩家投票 → 赞成÷总票数并比对通过比例 → 通过/驳回白名单申请
+# 投票者投票步骤: 收到投票提示 → 根据提示或手动打开UI查看申请 → 参与投票或发表意见/弃权 → 投票完成
+
+# 调试模式
+# 用于开发者调取调试信息
+debug: false
+
+# 数据统计设置-bStats
+# 这个选项用于帮助开发者统计插件使用情况, 并且几乎完全不会影响服务器性能.
+# 你可以在 "plugins/bStats" 文件夹下修改配置关闭所有插件的bStats统计.
+# ↓↓↓当然你可以在这里单独关闭本插件的bStats统计.
+metrics: true
+
+# 检查更新开关
+# 这个选项用于帮助你检查本插件是否存在更新.
+# 不想要此功能请设置为 false .
+# 检查条目需要进行联网操作，不过此操作是异步执行的不会直接影响服务器性能.
+check-update: true
+
+# 数据库配置
+#   在下面配置数据库连接信息.
+database:
+  driver: com.mysql.cj.jdbc.Driver
+  host: 127.0.0.1
+  port: 3306
+  database: minecraft
+  username: root
+  password: password
+  extra: ?useSSL=false
+  table-prefix: votepass_
+
+# 计时器
+time:
+  #单个投票过多久因超时自动关闭，单位(天).
+  auto-close: 15d
+  #单个投票时间过多久让管理员介入
+  admin-intervention: 7d
+
+# 菜单信息配置
+page-items:
+  #上一页
+  previous-page:
+    material: ARROW
+    name: "&f上一页"
+    lore:
+      - " "
+      - "&f  左键点击翻到上一页."
+      - "&f  右键点击翻到第一页."
+      - " "
+  #下一页
+  next-page:
+    material: ARROW
+    name: "&f下一页"
+    lore:
+      - " "
+      - "&f  左键点击翻到下一页."
+      - "&f  右键点击翻到最后一页."
+      - " "
+
+server:
+  # 服务器标识
+  # 和本插件的lobby大厅版本配套使用,用于区分和定位各服务器
+  # 请务必和本插件lobby版本子服配置里的ID保持一致
+  id: server1
+  # 投票自动通过比例设定
+  #
+  # 你可以设定不同可投票人数下的投票自动通过比例
+  # 当比例<0时则禁用自动通过
+  #
+  # 示例：
+  #   auto-pass-ratio:
+  #    '5': '0.8'
+  #    '20': '0.6'
+  #
+  # 以上示例代表能够参与的投票人数≤5人时，有80%以上的通过票就能够自动结束投票通过白名单,
+  # 当 5＜可投票人数≤20 时，通过比率变更为60%
+  auto-pass-ratio:
+    "5": "0.8"
+    "20": "0.6"
+  # 投票权在线条件
+  # 只有在多少日内上过线的人有投票权
+  # 只有拥有投票权的玩家能够进行自动投票
+  active-online-time: 3d
+  # 白名单数据库同步时间
+  # 除非你想把数据库打爆，不然这个值不应该低于10s
+  # 如果这个值 ≤0 , 那么只有在执行 '/votepass sync' 命令时才会进行同步.
+  sync-period: 3m
+  # 提醒拥有投票权的玩家进行投票的提醒周期
+  notify-period: 15m
+  # 玩家因没有白名单而被踢出的提示词
+  kick-message:
+    - 你没有该分区的准入权限，请先通过填写大厅问卷申请白名单。
+  # 是否限制管理员只能对进入干预期的问卷进行操作.
+  # 开启此项后强制添加/删除白名单的操作只能够在控制台完成
+  manage-restrict: false
+
+# 音效配置
+sounds:
+  # 投票提醒
+  notify: ENTITY_VILLAGER_CELEBRATE
+  # 禁止音效
+  abstain: ENTITY_VILLAGER_HURT
+  # 通过音效
+  approved: ENTITY_VILLAGER_CELEBRATE
+  # 拒绝音效
+  reject: ENTITY_VILLAGER_NO
+
+# 菜单UI配置
+guis:
+  # 白名单开关
+  abstain-toggle:
+    enabled:
+      - "&8当前投票状态"
+      - "&e&l完全弃权&8."
+      - " "
+      - "&7&o你不会被计数到白名单投票人群中"
+      - "&8但是参与分区投票应该是每个成员该做的事."
+      - " "
+    disabled:
+      - "&8当前投票状态"
+      - "&a&l参与投票中&8."
+      - " "
+      - "&7感谢你为此分区白名单做出贡献."
+      - " "
+      - " "
+    toggle:
+      - "你可以自主选择是否参与到将来的投票中"
+      - "投票权可以被临时放弃，但是随时可以回归到投票者队伍当中"
+      - "只有在你每次开启投票之后的请求才能够参与投票"
+      - "[&a&l[我愿意参与投票]](hover=点击加入投票者. run_command=/votepass abstain disable)"
+      - "[&c&l[完全弃权]](hover=点击放弃投票权. run_command=/votepass abstain enable)"
+  # 问卷列表
+  request-list:
+    title: "&a&l所有申请问卷"
+    items:
+      info:
+        material: PLAYER_HEAD
+        name: "&7#%(request_id) &e&l%(name)"
+        lore:
+          - " "
+          - "&7请求者: &e&l%(name)"
+          - "&7UUID: &e%(uuid)"
+          - "&7"
+          - "&7总字数: &e%(request_words)"
+          - "&7创建时间: &e%(create_time)"
+          - "&7结束时间: &e%(close_time)"
+          - " "
+          - "&f✔ &a&l赞成&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)"
+          - "&f✘ &c&l反对&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)"
+          - "&f◮ &e&l弃权&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)"
+          - " "
+          - "&a ▶ 左键点击 &8|&f 查看详细回答"
+          - "&a ▶ 右键点击 &8|&f 查看回答快览"
+  # 意见列表
+  request-comments:
+    title: "&e&l投票意见 &7| 问卷 #&f%(id)"
+    items:
+      info:
+        material: PLAYER_HEAD
+        name: "&7#%(request_id) &e&l%(name)"
+        lore:
+          - " "
+          - "&7请求者: &e&l%(name)"
+          - "&7UUID: &e%(uuid)"
+          - "&7"
+          - "&7总字数: &e%(request_words)"
+          - "&7创建时间: &e%(create_time)"
+          - "&7结束时间: &e%(close_time)"
+          - " "
+          - "&f✔ &a&l赞成&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)"
+          - "&f✘ &c&l反对&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)"
+          - "&f◮ &e&l弃权&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)"
+          - " "
+          - "&a ▶ 左键点击 &8|&f 回到详细回答"
+      approved:
+        material: GREEN_STAINED_GLASS_PANE
+        name: "&7意见来自 &f%(voter)"
+        lore:
+          - " "
+          - "&7&o该玩家&a&l赞成&r&7&o此申请"
+          - "&7&o时间: &f&o%(time)"
+          - " "
+          - "&f%(content)"
+          - " "
+      rejected:
+        material: RED_STAINED_GLASS_PANE
+        name: "&7Comment from &f%(voter)"
+        lore:
+          - " "
+          - "&7&o该玩家&c&l反对&r&7&o此申请"
+          - "&7&o时间: &f&o%(time)"
+          - " "
+          - "&f%(content)"
+          - " "
+  # 问卷快览
+  quick-review:
+    overview:
+      - "问卷快览 #%(request_id)"
+      - " "
+      - "&7申请人"
+      - "&6%(name)"
+      - " "
+      - "&a&l赞成&7: %(pros_amount)&8(%(pros_ratio)%)"
+      - "&c&l反对&7: %(cons_amount)&8(%(cons_ratio)%)"
+      - "&e&l弃权&7: %(abstains_amount)&8(%(abstains_ratio)%)"
+      - " "
+      - "&8请转跳到下一页查看详细回答"
+    answer-empty:
+      - "&8#%(index): &0%(question)"
+      - " "
+      - "&7&o该玩家对此问题没有回答."
+      - "&8请查看其他问题的回答."
+    answer-content:
+      - "&8#%(index): &0%(question)"
+      - " "
+      - "&8该玩家对此问题回答了 %(words) 字,"
+      - "&8如果内容较多，你可以翻页查看."
+    has-comments:
+      - "&8这个问卷总共有 %(amount) 个投票,"
+      - " "
+      - "&7&o如果你想参与投票，请回到之前的页面."
+      - "&8"
+    none-comment:
+      - "&8目前没有其他投票者处理该请求."
+      - " "
+      - "&7&o如果你想参与投票，请回到之前的页面."
+    comment-approved:
+      - "&8#%(index) &7来自 &9%(voter)"
+      - " "
+      - "&7表示 &a&l赞成 &7."
+      - "&8"
+      - "&8%(comment)"
+    comment-rejected:
+      - "&8#%(index) &7来自 &9%(voter)"
+      - " "
+      - "&7表示 is &C&l反对&7."
+      - "&8"
+      - "&8%(comment)"
+    return:
+      - "&f&l所有的回答已展示完毕."
+      - " "
+      - "[&a&l[处理该请求]](hover=点击回到问卷处理页面. run_command=/votepass handle %(id))"
+  # 问卷投票处理
+  vote-handle:
+    title: "&a&l问卷处理 &7#%(id)"
+    items:
+      info:
+        material: PLAYER_HEAD
+        name: "&7#%(request_id) &e&l%(name)"
+        lore:
+          - " "
+          - "&7请求者: &e&l%(name)"
+          - "&7UUID: &e%(uuid)"
+          - "&7"
+          - "&7总字数: &e%(request_words)"
+          - "&7创建时间: &e%(create_time)"
+          - "&7结束时间: &e%(close_time)"
+          - " "
+          - "&f✔ &a&l赞成&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)"
+          - "&f✘ &c&l反对&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)"
+          - "&f◮ &e&l弃权&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)"
+      approve:
+        material: GREEN_STAINED_GLASS_PANE
+        name: "&a&l表示赞成 &8#&f%(id)"
+      abstain:
+        material: GREEN_STAINED_GLASS_PANE
+        name: "&e&l放弃投票"
+      reject:
+        material: RED_STAINED_GLASS_PANE
+        name: "&c&l表示反对 &8#&f%(id)"
+      not-commented:
+        material: PAPER
+        name: "&f&l个人意见"
+        lore:
+          - " "
+          - "&f这个请求目前有 &E%(amount) &f个来自其他投票者的意见."
+          - " "
+          - "&7&o你目前对于此问卷没有发表意见,"
+          - "&7&o好的意见可以帮助其他投票者更好地做出决策."
+          - " "
+          - "&a ▶ 左键点击 &8|&f 查看他人意见"
+          - "&a ▶ 右键点击 &8|&f 发表你的意见"
+      commented:
+        material: PAPER
+        name: "&f&l个人意见"
+        lore:
+          - " "
+          - "&f这个请求目前有 &E%(amount) &f个来自其他投票者的意见."
+          - " "
+          - "&7&o你发表的意见:"
+          - "&f %(comment)"
+          - " "
+          - "&a ▶ 左键点击 &8|&f 查看他人意见"
+          - "&a ▶ 右键点击 &8|&f 发表你的意见"
+      answer:
+        material: BOOK
+        name: "&7问题: &f%(question)"
+        lore:
+          - " "
+          - "&f这个回答有 &e%(words) &f字."
+          - " "
+          - "&a ▶ 左键点击 &8|&f 查看回答"
+    book:
+      return:
+        - "&f&l所有的回答已展示完毕."
+        - " "
+        - "[&a&l[处理该请求]](hover=点击回到问卷处理页面. run_command=/votepass handle %(id))"
+  # 问卷投票确认
+  vote-confirm:
+    title: "&a&l确定投票 | &7#%(id)"
+    items:
+      info:
+        material: PLAYER_HEAD
+        name: "&7#%(request_id) &e&l%(name)"
+        lore:
+          - " "
+          - "&7请求者: &e&l%(name)"
+          - "&7UUID: &e%(uuid)"
+          - "&7"
+          - "&7总字数: &e%(request_words)"
+          - "&7创建时间: &e%(create_time)"
+          - "&7结束时间: &e%(close_time)"
+          - " "
+          - "&f✔ &a&l赞成&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)"
+          - "&f✘ &c&l反对&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)"
+          - "&f◮ &e&l弃权&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)"
+      approved:
+        material: EMERALD
+        name: "&7你的决定是 &a&l赞成"
+        lore:
+          - " "
+          - "&f你将给玩家 &e%(player) &f的请求"
+          - "&f投出 &a&l赞成票&f"
+          - " "
+      abstained:
+        material: COAL
+        name: "&7你的决定是 &e&l弃权"
+        lore:
+          - " "
+          - "&f你将放弃本次投票"
+          - "&&c&l做出此决定将不能修改"
+          - " "
+      rejected:
+        material: REDSTONE
+        name: "&7你的决定是 &c&lRejected"
+        lore:
+          - " "
+          - "&f你将给玩家 &e%(player) &f的请求"
+          - "&f投出 &c&l反对票&f"
+          - " "
+      confirm:
+        material: GREEN_STAINED_GLASS_PANE
+        name: "&a&l确定投票"
+      cancel:
+        material: RED_STAINED_GLASS_PANE
+        name: "&7再考虑一下"
+      not-commented:
+        material: PAPER
+        name: "&f&lPersonal comments"
+        lore:
+          - " "
+          - "&7&o你目前对于此问卷没有发表意见,"
+          - "&7&o好的意见可以帮助其他投票者更好地做出决策."
+      commented:
+        material: PAPER
+        name: "&f&lPersonal comments"
+        lore:
+          - " "
+          - "&7&o你发表的意见:"
+          - "&f %(comment)"
+          - " "
+  # 问卷管理员面板
+  admin-manage:
+    title: "&a&l管理请求 | 管理员面板"
+    items:
+      info:
+        material: PLAYER_HEAD
+        name: "&7#%(request_id) &e&l%(name)"
+        lore:
+          - " "
+          - "&7请求者: &e&l%(name)"
+          - "&7UUID: &e%(uuid)"
+          - "&7"
+          - "&7总字数: &e%(request_words)"
+          - "&7创建时间: &e%(create_time)"
+          - "&7结束时间: &e%(close_time)"
+          - " "
+          - "&f✔ &a&l赞成&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)"
+          - "&f✘ &c&l反对&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)"
+          - "&f◮ &e&l弃权&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)"
+          - " "
+          - "&a ▶ 左键点击 &8|&f 处理该请求"
+  # 问卷管理员处理面板
+  admin-handle:
+    title: "&a&l处理请求 | 管理员面板 &7#%(id)"
+    items:
+      info:
+        material: PLAYER_HEAD
+        name: "&7#%(request_id) &e&l%(name)"
+        lore:
+          - " "
+          - "&7请求者: &e&l%(name)"
+          - "&7UUID: &e%(uuid)"
+          - "&7"
+          - "&7总字数: &e%(request_words)"
+          - "&7创建时间: &e%(create_time)"
+          - "&7结束时间: &e%(close_time)"
+          - " "
+          - "&f✔ &a&l赞成&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)"
+          - "&f✘ &c&l反对&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)"
+          - "&f◮ &e&l弃权&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)"
+      approve:
+        material: GREEN_STAINED_GLASS_PANE
+        name: "&a&l通过 &8#&f%(id)"
+      reject:
+        material: RED_STAINED_GLASS_PANE
+        name: "&c&l拒绝 &8#&f%(id)"
+      commented:
+        material: PAPER
+        name: "&f&l请求意见"
+        lore:
+          - " "
+          - "&f这个请求目前有 &E%(amount) &f个来自其他投票者的意见."
+          - " "
+          - "&a ▶ 左键点击 &8|&f 查看投票者的意见"
+      answer:
+        material: BOOK
+        name: "&7问题: &f%(question)"
+        lore:
+          - " "
+          - "&f玩家回答了这个问题 &e%(words) &f字."
+          - " "
+          - "&a ▶ 左键点击 &8|&f 查看回答"
+    book:
+      return:
+        - "&f&l所有的回答已展示完毕."
+        - " "
+        - "[&a&l[处理该请求]](hover=点击回到问卷处理页面. run_command=/votepass handle %(id))"
