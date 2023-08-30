@@ -1,5 +1,5 @@
 # VotePass-Lobby-config-大厅端配置
-# 翻译版本: 1.0.2
+# 翻译版本: 1.0.3
 # 插件作者: ArtformGames
 # 翻译工作: MingGRE
 # 项目地址: https://github.com/ArtformGames/VotePass
@@ -72,7 +72,7 @@ rules:
   #只能修改文字和颜色代码部分
   book:
     accept:
-      - "[&a&l[确定接受规定]](hover=&f点击&a&l确定并且接受服务器相关规定&f.run_command=/votepass accept %(server))"
+      - "[&a&l[确定接受规定]](hover=&f点击&a&l确定并且接受服务器相关规定&f. run_command=/votepass accept %(server))"
     deny:
       - "[&c&l[我想拒绝规定]](hover=&f点击&c&l拒绝服务器相关规定&f. run_command=/votepass deny %(server))"
 
