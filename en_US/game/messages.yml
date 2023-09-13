@@ -54,7 +54,7 @@ users:
   - '&fOnly the user had joined any server before can add to the whitelist.'
   - '&7&oAny server means lobby or any other game servers.'
   list:
-  - '&fServer users list &7(total &F%(total)&7):'
+  - '&fServer users list &7(size &F%(size)&7):'
   user:
   - '&8- [&f%(name) &7[#%(request)]](hover=&7Joined at &f%(passed_time)))'
   already-in:
@@ -66,17 +66,17 @@ users:
     - '&fTry to add user %(name) to whitelist...'
     - '&fThis may take a while, please wait patiently.'
     success:
-    - '&a&lSuccess! &User %(name) has been added to whitelist, cost &a%(time)&fms.'
+    - '&a&lSuccess! &fUser &e%(name) &fhas been added to whitelist, cost &a%(time)&fms.'
     failed:
-    - '&c&lFailed to add! &cThere are some errors, please see console for details.'
+    - '&c&lFailed to add! &fThere are some errors, please see console for details.'
   remove:
     start:
     - '&fTry to remove user %(name) from whitelist...'
     - '&fThis may take a while, please wait patiently.'
     success:
-    - '&a&lSuccess! &User %(name) has been removed from whitelist, cost &a%(time)&fms.'
+    - '&a&lSuccess! &fUser &e%(name) &fhas been removed from whitelist, cost &a%(time)&fms.'
     failed:
-    - '&c&lFailed to remove! &cThere are some errors, please see console for details.'
+    - '&c&lFailed to remove! &fThere are some errors, please see console for details.'
 
 migrate:
   start:
@@ -92,8 +92,16 @@ sync:
   - '&fSynchronizing the whitelist data with the server...'
   - '&fThis may take a while, please wait patiently.'
   success:
-  - '&a&lSuccess! &There are %(amount) whitelist requests have been synchronized to
+  - '&a&lDone! &fThere are &e%(amount) &fwhitelist requests have been synchronized to
     the server, cost &a%(time)&fms.'
+
+verify:
+  start:
+  - '&fVerifying and recalculating current requests..'
+  - '&fThis may take a while, please wait patiently.'
+  success:
+  - '&a&lSuccess! &fThere are &e%(amount) &fwhitelist requests have been updated, cost
+    &a%(time)&fms.'
 
 abstain:
   abstained:
@@ -113,6 +121,8 @@ vote:
   - '&fYou can [&6&lCLICK HERE](show_text=click to open the whitelist voting interface
     run_command=/votepass requests) &fParticipate in the server whitelist review and
     exercise your voting right!'
+  already-voted:
+  - '&fYou have already voted for &e%(player) &f''s whitelist application &8(#%(id))&f!'
   viewing:
   - '&fYou are viewing &e%(player) &f''s answer to &6%(question) &f,'
   - '&fYou can [&6&lCLICK HERE](show_text=Click to open the request details page run_command=/votepass
@@ -148,3 +158,11 @@ admin:
   rejected:
   - '&fYou have successfully &c&lrejected &e%(player) &f''s whitelist application &8(#%(id))&f,
     and the corresponding request has been automatically closed.'
+
+comment:
+  start:
+  - '&f'
+  - '&fYou are commenting on &e%(player) &f''s whitelist application &8(#%(id))&f,'
+  - '&fYou can simply text your opinions in chat, or type ''&ccancel&f'' to return back.'
+  too-long:
+  - '&c&lToo long! &fMax length of a comment is &e%(max) &fletters.'

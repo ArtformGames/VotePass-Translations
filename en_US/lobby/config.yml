@@ -21,10 +21,10 @@ database:
   driver: com.mysql.cj.jdbc.Driver
   host: 127.0.0.1
   port: 3306
-  database: test
+  database: minecraft
   username: root
-  password: passwd
-  extra: ?sslMode=DISABLED
+  password: password
+  extra: ?useSSL=false
   table-prefix: votepass_
 
 time:

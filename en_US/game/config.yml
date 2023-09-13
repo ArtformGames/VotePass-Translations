@@ -21,10 +21,10 @@ database:
   driver: com.mysql.cj.jdbc.Driver
   host: 127.0.0.1
   port: 3306
-  database: test
+  database: minecraft
   username: root
-  password: passwd
-  extra: ?sslMode=DISABLED
+  password: password
+  extra: ?useSSL=false
   table-prefix: votepass_
 
 time:
@@ -55,7 +55,7 @@ server:
   id: survival
   # Auto pass ratio, when the ratio of the passed vote is greater than the value,
   # the vote will be automatically passed, below zero means disabled auto pass.
-  # You can configure different ratio based on different total votable players.
+  # You can configure different ratio based on different size votable players.
   auto-pass-ratio:
     '5': '0.8'
     '20': '0.6'
@@ -74,12 +74,60 @@ server:
   - You are not in the whitelist, please request to join the whitelist.
   # Whether to restrict administrators to managing only requests that require intervention.
   manage-restrict: false
+  # The commands that will be executed after player submit a vote.
+  commands:
+    approve:
+    - say &a%player_name% &fjust &aapproved&f the &a%(target)&f's request &6#%(id) &f!
+    abstain:
+    - say &a%player_name% &fjust &eabstained&f to vote for the &a%(target)&f's request
+      &6#%(id) &f!
+    reject:
+    - say &a%player_name% &fjust &cdenied&f the &a%(target)&f's request &6#%(id) &f!
 
 sounds:
   notify: ENTITY_VILLAGER_CELEBRATE
   abstain: ENTITY_VILLAGER_HURT
   approved: ENTITY_VILLAGER_CELEBRATE
   reject: ENTITY_VILLAGER_NO
+
+comment:
+  # Max letters in a single comment
+  max: 120
+  # How many letters are displayed in a single line
+  line: 25
+  # Prefix for each line
+  prefix: '&f&o  '
+
+answers:
+  # How many letters are displayed in a single line
+  letters-per-line: 25
+  # Max lines that displayed in lore
+  max-lines: 6
+  # Prefix for each line
+  prefix: '&f&o  '
+  # Extra lore if answers are too long, tell voters to click to view details.
+  extra:
+  - '&f&o  ... More in details!'
+
+icon:
+  info:
+    material: PLAYER_HEAD
+    name: '&7#%(request_id) &e&l%(name)'
+    lore:
+    - ' '
+    - '&7Request form &e&l%(name)'
+    - '&7UUID: &e%(uuid)'
+    - '&7'
+    - '&7Contain words: &e%(request_words)'
+    - '&7Submit time: &e%(create_time)'
+    - '&7Close time: &e%(close_time)'
+    - ' '
+    - '&f✔ &a&lApproved&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)'
+    - '&f✘ &c&lRejected&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)'
+    - '&f◮ &e&lAbstained&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)'
+    - ' '
+    - '&fRequire &e%(pass_remain)&7/%(pass_required) &fmore approves to pass the request.'
+    - '#click-lore#{1,0}'
 
 guis:
   abstain-toggle:
@@ -106,45 +154,15 @@ guis:
       abstain enable)'
   request-list:
     title: '&a&lAll Requests'
-    items:
-      info:
-        material: PLAYER_HEAD
-        name: '&7#%(request_id) &e&l%(name)'
-        lore:
-        - ' '
-        - '&7Request form &e&l%(name)'
-        - '&7UUID: &e%(uuid)'
-        - '&7'
-        - '&7Contain words: &e%(request_words)'
-        - '&7Submit time: &e%(create_time)'
-        - '&7Close time: &e%(close_time)'
-        - ' '
-        - '&f✔ &a&lApproved&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)'
-        - '&f✘ &c&lRejected&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)'
-        - '&f◮ &e&lAbstained&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)'
-        - ' '
-        - '&a ▶ Left  click &8|&f view details'
-        - '&a ▶ Right click &8|&f quick review'
+    additional-lore:
+      click:
+      - '&a ▶ Click &8|&f View details'
   request-comments:
     title: '&e&lComments &7| Request #&f%(id)'
+    additional-lore:
+      click:
+      - ' &a ▶ Click &8|&f Return to the request details page'
     items:
-      info:
-        material: PLAYER_HEAD
-        name: '&7#%(request_id) &e&l%(name)'
-        lore:
-        - ' '
-        - '&7Request form &e&l%(name)'
-        - '&7UUID: &e%(uuid)'
-        - '&7'
-        - '&7Contain words: &e%(request_words)'
-        - '&7Submit time: &e%(create_time)'
-        - '&7Close time: &e%(close_time)'
-        - ' '
-        - '&f✔ &a&lApproved&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)'
-        - '&f✘ &c&lRejected&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)'
-        - '&f◮ &e&lAbstained&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)'
-        - ' '
-        - ' &a ▶ Click &8|&f Return to the request details page'
       approved:
         material: GREEN_STAINED_GLASS_PANE
         name: '&7Comment from &f%(voter)'
@@ -153,7 +171,7 @@ guis:
         - '&7&oThis player approved this request'
         - '&7&oat &f&o%(time)'
         - ' '
-        - '&f%(content)'
+        - '#comment#'
         - ' '
       rejected:
         material: RED_STAINED_GLASS_PANE
@@ -163,77 +181,11 @@ guis:
         - '&7&oThis player rejected this request'
         - '&7&oat &f&o%(time)'
         - ' '
-        - '&f%(content)'
+        - '#comment#'
         - ' '
-  quick-review:
-    overview:
-    - 'Handle request #%(request_id)'
-    - ' '
-    - '&7Applicant username'
-    - '&6%(name)'
-    - ' '
-    - '&a&lApproved&7: %(pros_amount)&8(%(pros_ratio)%)'
-    - '&c&lRejected&7: %(cons_amount)&8(%(cons_ratio)%)'
-    - '&e&lAbstain&7: %(abstains_amount)&8(%(abstains_ratio)%)'
-    - ' '
-    - '&8Please turn to the next page for detailed answers.'
-    answer-empty:
-    - '&8#%(index): &0%(question)'
-    - ' '
-    - '&7&oThis user did not answer the question.'
-    - '&8Please keep turning the page to see other answers.'
-    answer-content:
-    - '&8#%(index): &0%(question)'
-    - ' '
-    - '&8This user answered %(words) words,'
-    - '&8Please keep turning the page to see his answers.'
-    has-comments:
-    - '&8This request has a total of %(amount) comments,'
-    - ' '
-    - '&7&oIf you want to express your personal opinion, please return to process this
-      request in the next page.'
-    - '&8Please keep turning the page to see others opinions.'
-    none-comment:
-    - '&8There are currently no other votes on this request.'
-    - ' '
-    - '&7&oIf you want to express your personal opinion, please return to process this
-      request in the next page.'
-    comment-approved:
-    - '&8#%(index) &7from &9%(voter)'
-    - ' '
-    - '&7This vote is &a&lApproved &7.'
-    - '&8'
-    - '&8%(comment)'
-    comment-rejected:
-    - '&8#%(index) &7from &9%(voter)'
-    - ' '
-    - '&7This vote is &C&lRejected&7.'
-    - '&8'
-    - '&8%(comment)'
-    return:
-    - All answers have been displayed, please click the text below to go to the detailed
-      interface for processing.
-    - ' '
-    - '[&a&l[Handle request]](hover=Click to return to the details page and continue processing
-      related answers. run_command=/votepass handle %(id))'
   vote-handle:
     title: '&a&lHandle Request &7#%(id)'
     items:
-      info:
-        material: PLAYER_HEAD
-        name: '&7#%(request_id) &e&l%(name)'
-        lore:
-        - ' '
-        - '&7Request form &e&l%(name)'
-        - '&7UUID: &e%(uuid)'
-        - '&7'
-        - '&7Contain words: &e%(request_words)'
-        - '&7Submit time: &e%(create_time)'
-        - '&7Close time: &e%(close_time)'
-        - ' '
-        - '&f✔ &a&lApproved&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)'
-        - '&f✘ &c&lRejected&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)'
-        - '&f◮ &e&lAbstained&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)'
       approve:
         material: GREEN_STAINED_GLASS_PANE
         name: '&a&lApprove &fthe request &8#&f%(id)'
@@ -263,7 +215,7 @@ guis:
         - '&fThis request now has &E%(amount) &fcomments.'
         - ' '
         - '&7&oYou commented:'
-        - '&f %(comment)'
+        - '#comment#'
         - ' '
         - '&a ▶ Left  click &8|&f View other''s comments'
         - '&a ▶ Right click &8|&f Edit your comment'
@@ -272,33 +224,20 @@ guis:
         name: '&7Question: &f%(question)'
         lore:
         - ' '
-        - '&fThis answer contains &e%(words) &fwords.'
+        - '&fThis answer contains &e%(words) &fletters.'
+        - '#contents#{1}'
+        - '#more-contents#{1}'
         - ' '
-        - '&a ▶ Click &8|&f View answer contents'
+        - '&a ▶ Click &8|&f View full answer contents'
     book:
       return:
-      - All answers have been displayed.
-      - '[Click here](hover=Click to return to the details page and continue processing
-        related answers. run_command=/votepass handle %(id)) to return to the request details
-        page.'
+      - '&0All answers have been displayed.'
+      - '[&2&l[Click here]](hover=Click to return to the details page and continue processing
+        related answers. run_command=/votepass handle %(id))&0 to return to the request
+        details page.'
   vote-confirm:
-    title: '&a&lConfirm to vote for Request &7#%(id)'
+    title: '&a&lConfirm Vote | &7#%(id)'
     items:
-      info:
-        material: PLAYER_HEAD
-        name: '&7#%(request_id) &e&l%(name)'
-        lore:
-        - ' '
-        - '&7Request form &e&l%(name)'
-        - '&7UUID: &e%(uuid)'
-        - '&7'
-        - '&7Contain words: &e%(request_words)'
-        - '&7Submit time: &e%(create_time)'
-        - '&7Close time: &e%(close_time)'
-        - ' '
-        - '&f✔ &a&lApproved&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)'
-        - '&f✘ &c&lRejected&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)'
-        - '&f◮ &e&lAbstained&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)'
       approved:
         material: EMERALD
         name: '&7You decision is &a&lApproved'
@@ -345,42 +284,12 @@ guis:
         - ' '
   admin-manage:
     title: '&a&lManage Requests'
-    items:
-      info:
-        material: PLAYER_HEAD
-        name: '&7#%(request_id) &e&l%(name)'
-        lore:
-        - ' '
-        - '&7Request form &e&l%(name)'
-        - '&7UUID: &e%(uuid)'
-        - '&7'
-        - '&7Contain words: &e%(request_words)'
-        - '&7Submit time: &e%(create_time)'
-        - '&7Close time: &e%(close_time)'
-        - ' '
-        - '&f✔ &a&lApproved&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)'
-        - '&f✘ &c&lRejected&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)'
-        - '&f◮ &e&lAbstained&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)'
-        - ' '
-        - '&a ▶ Click &8|&f Manage this request'
+    additional-lore:
+      click:
+      - '&a ▶ Click &8|&f Manage this request'
   admin-handle:
     title: '&a&lHandle Request &7#%(id)'
     items:
-      info:
-        material: PLAYER_HEAD
-        name: '&7#%(request_id) &e&l%(name)'
-        lore:
-        - ' '
-        - '&7Request form &e&l%(name)'
-        - '&7UUID: &e%(uuid)'
-        - '&7'
-        - '&7Contain words: &e%(request_words)'
-        - '&7Submit time: &e%(create_time)'
-        - '&7Close time: &e%(close_time)'
-        - ' '
-        - '&f✔ &a&lApproved&7: &a%(pros_amount)&7/%(votes_amount) &8(%(pros_ratio)%)'
-        - '&f✘ &c&lRejected&7: &c%(cons_amount)&7/%(votes_amount) &8(%(cons_ratio)%)'
-        - '&f◮ &e&lAbstained&7: &7%(abstains_amount)&7/%(votes_amount) &8(%(abstains_ratio)%)'
       approve:
         material: GREEN_STAINED_GLASS_PANE
         name: '&a&lApprove &fthe request &8#&f%(id)'
@@ -400,12 +309,14 @@ guis:
         name: '&7Question: &f%(question)'
         lore:
         - ' '
-        - '&fThis answer contains &e%(words) &fwords.'
+        - '&fThis answer contains &e%(words) &fletters.'
+        - '#contents#{1}'
+        - '#more-contents#{1}'
         - ' '
-        - '&a ▶ Click &8|&f View answer contents'
+        - '&a ▶ Click &8|&f View full answer contents'
     book:
       return:
-      - All answers have been displayed.
-      - '[Click here](hover=Click to return to the details page and continue processing
-        related answers. run_command=/votepass manage %(id)) to return to the request details
-        page.'
+      - '&0All answers have been displayed.'
+      - '[&2&l[Click here]](hover=Click to return to the details page and continue processing
+        related answers. run_command=/votepass manage %(id))&0 to return to the request
+        details page.'
