@@ -1,26 +1,31 @@
 # VotePass-Lobby-config-大厅端配置
-# 翻译版本: 1.0.3
-# 插件作者: ArtformGames
-# 翻译工作: MingGRE
-# 项目地址: https://github.com/ArtformGames/VotePass
+
+# 适用插件版本：1.2.0+ (https://github.com/ArtformGames/VotePass/releases)
+# 插件作者：ArtformGames (https://github.com/ArtformGames)
+# 插件项目地址：https://github.com/ArtformGames/VotePass
+
+# 简体中文语言版本：1.0.4
+# 简体中文语言工作：MingGre、Sraconni
+# 语言项目地址：https://github.com/ArtformGames/VotePass-Translations
 
 # 调试模式
 debug: false
 
 # 数据统计设置-bStats
-# 这个选项用于帮助开发者统计插件使用情况, 并且完全不会影响服务器性能.
-# 你可以在 "plugins/bStats" 文件夹下修改配置关闭所有插件的bStats统计.
-# ↓↓↓当然你可以在这里单独关闭本插件的bStats统计.
+# 这个选项用于帮助开发者统计插件使用情况, 并且完全不会影响服务器性能
+# 您可以在 "plugins/bStats" 文件夹下修改配置关闭所有插件的bStats统计
+# ↓↓↓当然您可以在这里单独关闭本插件的bStats统计
 metrics: true
 
 # 检查更新开关
-# 这个选项用于帮助你检查本插件是否存在更新.
-# 不想要此功能请设置为 false .
-# 检查条目需要进行联网操作，不过此操作是异步执行的不会直接影响服务器性能.
-check-update: true
+# 这个选项用于帮助您检查本插件是否存在更新
+# 不想要此功能请设置为 false
+# 检查条目需要进行联网操作，不过此操作是异步执行的不会直接影响服务器性能
+check-update: false
+
 
 # 数据库配置
-#   在下面配置数据库连接信息.
+#   在下面配置数据库连接信息
 database:
   driver: com.mysql.cj.jdbc.Driver
   host: 127.0.0.1
@@ -46,8 +51,8 @@ page-items:
     name: "&f上一页"
     lore:
       - " "
-      - "&f  左键点击翻到上一页."
-      - "&f  右键点击翻到第一页."
+      - "&f  左键点击翻到上一页"
+      - "&f  右键点击翻到第一页"
       - " "
   #下一页
   next-page:
@@ -55,70 +60,62 @@ page-items:
     name: "&f下一页"
     lore:
       - " "
-      - "&f  左键点击翻到下一页."
-      - "&f  右键点击翻到最后一页."
+      - "&f  左键点击翻到下一页"
+      - "&f  右键点击翻到最后一页"
       - " "
 
-# 服务器配置
 servers:
-  #配置文件夹名
   folder-name: servers
-  #禁用白名单的服务器
   disabled: []
 
-# 规则消息配置
 rules:
-  #书可点击的文字条目
-  #只能修改文字和颜色代码部分
   book:
     accept:
-      - "[&a&l[确定接受规定]](hover=&f点击&a&l确定并且接受服务器相关规定&f. run_command=/votepass accept %(server))"
+    - '[&a&l[确定接受规定]](hover=&f点击&a&l确定并且接受服务器相关规定&f. run_command=/votepass accept %(server))'
     deny:
-      - "[&c&l[我想拒绝规定]](hover=&f点击&c&l拒绝服务器相关规定&f. run_command=/votepass deny %(server))"
+    - '[&c&l[我想拒绝规定]](hover=&f点击&c&l拒绝服务器相关规定&f. run_command=/votepass deny %(server))'
 
-# 回答页面配置
-# ‘#description#’为描述占位符，请勿修改
 answering:
-  title: "&a&l请求页 &8| &f%(server)"
+  title: '&a&l请求页 &8| &f%(server)'
   book-item:
     slot: 8
-    name: "&c&l回答用书 &8(右键打开)"
+    name: '&c&l回答用书 &8(右键打开)'
     lore:
-      - "&f打开并填写你的回答!"
+    - '&f打开并填写您的回答!'
   items:
     required:
       material: WRITABLE_BOOK
-      name: "&8Q: &f%(title)"
+      name: '&8Q: &f%(title)'
       lore:
-        - " "
-        - "#description#"
-        - " "
-        - "&e&l● &e点击确定答案!"
+      - ' '
+      - '#description#'
+      - ' '
+      - '&e&l● &e点击确定答案!'
     finished:
       material: WRITTEN_BOOK
-      name: "&8Q: &f%(title)"
+      name: '&8Q: &f%(title)'
       lore:
-        - " "
-        - "#description#"
-        - " "
-        - "&a&l✔ &a此项已回答."
-        - "&7&o你可以点击此来修改你的回答."
+      - ' '
+      - '#description#'
+      - ' '
+      - '&a&l✔ &a此项已回答'
+      - '&7&o您可以点击此来修改您的回答'
     confirm:
       material: EMERALD
-      name: "&a&l确定所有回答并提交"
+      name: '&a&l确定所有回答并提交'
       lore:
-        - " "
-        - "&f点击提交."
+      - ' '
+      - '&f点击提交'
     cancel:
       material: REDSTONE
-      name: "&c&l取消回答申请"
+      name: '&c&l取消回答申请'
       lore:
-        - " "
-        - "&f点击取消回答申请."
+      - ' '
+      - '&f点击取消回答申请'
     pending:
       material: BARRIER
-      name: "&c&l× 请完成所有回答再提交"
+      name: '&c&l× 请完成所有回答再提交'
       lore:
-        - " "
-        - "&f只有在回答完所有问题之后,"
-        - "&f才能够提交申请."
+      - ' '
+      - '&f只有在回答完所有问题之后,'
+      - '&f才能够提交申请'
