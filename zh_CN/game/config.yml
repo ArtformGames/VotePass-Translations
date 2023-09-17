@@ -4,7 +4,7 @@
 # 插件作者：ArtformGames (https://github.com/ArtformGames)
 # 插件项目地址：https://github.com/ArtformGames/VotePass
 
-# 简体中文语言版本：1.0.4
+# 简体中文语言版本：1.0.4.1
 # 简体中文语言工作：MingGre、Sraconni
 # 语言项目地址：https://github.com/ArtformGames/VotePass-Translations
 
@@ -192,7 +192,7 @@ guis:
       click:
       - '&a ▶ &e&l左键点击&r &8|&f 查看问卷详细'
   request-comments:
-    title: '&e&l投票建议 &7| 问卷 #&f%(id)'
+    title: '&e&l投票建议 | 问卷 &f#%(id)'
     additional-lore:
       click:
       - ' &a ▶ &e&l左键点击&r &8|&f 返回问卷详细页'
@@ -218,7 +218,7 @@ guis:
         - '#comment#'
         - ' '
   vote-handle:
-    title: '&a&l问卷处理 &7#%(id)'
+    title: '&a&l问卷处理 &f#%(id)'
     items:
       approve:
         material: GREEN_STAINED_GLASS_PANE
@@ -269,7 +269,7 @@ guis:
       - ' '
       - '[&a&l[处理该申请]](hover=点击回到问卷处理页面. run_command=/votepass handle %(id))'
   vote-confirm:
-    title: '&a&l确定投票 | &7#%(id)'
+    title: '&a&l确定投票 | &f#%(id)'
     items:
       approved:
         material: EMERALD
@@ -322,7 +322,7 @@ guis:
       click:
       - '&a ▶ &e&l左键点击&r &8|&f 管理问卷列表'
   admin-handle:
-    title: '&a&l处理申请 | 管理员面板 &7#%(id)'
+    title: '&a&l处理申请 | 管理员面板 &f#%(id)'
     items:
       approve:
         material: GREEN_STAINED_GLASS_PANE
