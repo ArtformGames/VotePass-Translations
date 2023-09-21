@@ -95,16 +95,12 @@ comment:
   max: 120
   # How many letters are displayed in a single line
   line: 25
-  # Prefix for each line
-  prefix: '&f&o  '
 
 answers:
   # How many letters are displayed in a single line
   letters-per-line: 25
   # Max lines that displayed in lore
   max-lines: 6
-  # Prefix for each line
-  prefix: '&f&o  '
   # Extra lore if answers are too long, tell voters to click to view details.
   extra:
   - '&f&o  ... More in details!'
@@ -223,9 +219,11 @@ guis:
         material: BOOK
         name: '&7Question: &f%(question)'
         lore:
+        - '{  &a&l}#question#'
         - ' '
         - '&fThis answer contains &e%(words) &fletters.'
-        - '#contents#{1}'
+        - ''
+        - '{  &f&o}#contents#{1}'
         - '#more-contents#{1}'
         - ' '
         - '&a ▶ Click &8|&f View full answer contents'
@@ -308,9 +306,11 @@ guis:
         material: BOOK
         name: '&7Question: &f%(question)'
         lore:
+        - '{  &a&l}#question#'
         - ' '
         - '&fThis answer contains &e%(words) &fletters.'
-        - '#contents#{1}'
+        - ''
+        - '{  &f&o}#contents#{1}'
         - '#more-contents#{1}'
         - ' '
         - '&a ▶ Click &8|&f View full answer contents'
