@@ -1,10 +1,10 @@
 # VotePass-Game-config-分区端配置
 
-# 适用插件版本：1.2.0+ (https://github.com/ArtformGames/VotePass/releases)
+# 适用插件版本：1.2.2+ (https://github.com/ArtformGames/VotePass/releases)
 # 插件作者：ArtformGames (https://github.com/ArtformGames)
 # 插件项目地址：https://github.com/ArtformGames/VotePass
 
-# 简体中文语言版本：1.0.4.1
+# 简体中文语言版本：1.0.5
 # 简体中文语言工作：MingGre、Sraconni
 # 语言项目地址：https://github.com/ArtformGames/VotePass-Translations
 
@@ -128,8 +128,6 @@ comment:
   max: 120
   # 一行显示多少个字数
   line: 30
-  # 每行的前缀
-  prefix: '&f&o  '
 
 # 在Lore中显示回答
 answers:
@@ -137,8 +135,6 @@ answers:
   letters-per-line: 25
   # 最多显示几行
   max-lines: 5
-  # 每行的前缀
-  prefix: '&f&o  '
   # 如果回答太长，提示玩家点击进入查看完整回答
   extra:
   - '&f&o  ... 完整回答请左键点击查看!'
@@ -257,9 +253,11 @@ guis:
         material: BOOK
         name: '&7问题: &f%(question)'
         lore:
+        - '{  &a&l}#question#'
         - ' '
-        - '&f这个回答有 &e%(words) &f字'
-        - '#contents#{1}'
+        - '&2> &7这个回答有 &e%(words) &7字'
+        - ' '
+        - '{  &f&o}#contents#{1}'
         - '#more-contents#{1}'
         - ' '
         - '&a ▶ 左键点击 &8|&f 查看回答'
@@ -342,9 +340,11 @@ guis:
         material: BOOK
         name: '&7问题: &f%(question)'
         lore:
+        - '{  &a&l}#question#'
         - ' '
-        - '&f玩家回答了这个问题 &e%(words) &f字'
-        - '#contents#{1}'
+        - '&2> &7这个回答有 &e%(words) &7字'
+        - ' '
+        - '{  &f&o}#contents#{1}'
         - '#more-contents#{1}'
         - ' '
         - '&a ▶ 左键点击 &8|&f 查看回答'
