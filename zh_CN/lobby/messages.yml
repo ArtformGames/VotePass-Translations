@@ -4,7 +4,7 @@
 # 插件作者：ArtformGames (https://github.com/ArtformGames)
 # 插件项目地址：https://github.com/ArtformGames/VotePass
 
-# 简体中文语言版本：1.0.4
+# 简体中文语言版本：1.0.4.2
 # 简体中文语言工作：MingGre、Sraconni
 # 语言项目地址：https://github.com/ArtformGames/VotePass-Translations
 
@@ -33,32 +33,32 @@ reload:
   - '&c&l重载失败！ &f请检查插件配置'
 
 disabled:
-- '&l抱歉！ &f&e%(server) &f 分区的白名单申请尚未开放'
+- '&f抱歉！ &e%(server) &f分区的白名单申请尚未开放'
 
 rules:
-- '&您必须 &a 理解并且遵循 &6%(name) &f分区规则才能够申请， 请仔细阅读以下规则'
+- '&f您必须 &a理解并且遵循 &e%(name) &f分区的申请规则才能够申请， 请仔细阅读以下规则'
 
 accepted:
-- '&f您已经了解并接受 &6%(name)分区 &f的申请规则及注意事项&f， 现在您可以开始填写您的回答了'
+- '&f您已经了解并接受 &e%(name) &f分区的申请规则及注意事项&f， 现在您可以开始填写您的回答了'
 
 rejected:
-- '&c&l抱歉！ &f由于您 &c&lrejected不同意 &6%(name)分区 &f的申请规则及注意事项，因此本次申请已取消'
+- '&c抱歉！ &f由于您 &c不同意 &e%(name) &f分区的申请规则及注意事项，因此本次申请已取消'
 
 whitelisted:
-- '&您现在已经拥有 &e%(name) &f分区的白名单了，赶快加入吧~'
+- '&f您现在已经拥有 &e%(name) &f分区的白名单了，赶快加入吧~'
 
 pending:
-- '&您已经有一个在 &6%(name) &f 分区的白名单申请了，申请ID为: &e%(id)&f ，请耐心等待结果~'
+- '&f您已经有一个在 &e%(name) &f分区的白名单申请了，申请ID为: &e%(id)&f ，请耐心等待结果~'
 
 writing:
 - '&f我们在您的第 &e%(slot) &f格物品栏放置了一本书.问题:&r%(question) &f，'
 - '&f请右键书本填写您的回答， 并按提示保存回答'
 
 cancelled:
-- '&您暂时取消了 &6%(name) &f分区的申请，您可以随时重新填写'
+- '&f您暂时取消了 &e%(name) &f分区的申请，您可以随时重新填写'
 
 posted:
-- '&a&l提交成功！ &r&6%(name) &f分区的白名单申请已提交'
+- '&a&l提交成功！ &r&e%(name) &f分区的白名单申请已提交'
 - '&f申请ID为: &e%(id) &f. 请耐心等待投票结果'
 
 error:
