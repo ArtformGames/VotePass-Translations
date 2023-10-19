@@ -4,7 +4,7 @@
 # 插件作者：ArtformGames (https://github.com/ArtformGames)
 # 插件项目地址：https://github.com/ArtformGames/VotePass
 
-# 简体中文语言版本：1.0.4
+# 简体中文语言版本：1.0.4.3
 # 简体中文语言工作：MingGre、Sraconni
 # 语言项目地址：https://github.com/ArtformGames/VotePass-Translations
 
@@ -19,8 +19,8 @@
 # !!! 必须和您想配置的分区Votepass-Game插件配置(config.yml)里的ID一致，和本文件名没关系 !!!
 id: server1
 
-# 问卷标题
-name: "&7白名单申请 &8| &a&l莫某分区 "
+# 目标服务器名称
+name: "某某分区"
 
 # 问卷规则描述配置
 # 这是在玩家填写问卷时展示给他们的内容
@@ -28,7 +28,7 @@ name: "&7白名单申请 &8| &a&l莫某分区 "
 # 某某分区可以自己定义，因为是字符串所以不用和上面的ID一致
 rules:
   # 问卷标题
-  title: "某某服务器 - 莫某分区白名单申请"
+  title: "某某服务器 - 某某分区白名单申请"
   # 问卷作者
   author: "管理组"
   # 问卷规则描述页面,以书本形式展示,以下数字标头为页码
