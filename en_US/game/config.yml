@@ -28,7 +28,9 @@ database:
   table-prefix: votepass_
 
 time:
+  # The time that the request will be automatically closed if it have not been handled yet.
   auto-close: 15d
+  # The time that the request will be sent to admin to handle if request still have no result.
   admin-intervention: 7d
 
 page-items:
@@ -219,10 +221,8 @@ guis:
         material: BOOK
         name: '&7Question: &f%(question)'
         lore:
-        - '{  &a&l}#question#'
         - ' '
         - '&fThis answer contains &e%(words) &fletters.'
-        - ''
         - '{  &f&o}#contents#{1}'
         - '#more-contents#{1}'
         - ' '
@@ -306,10 +306,8 @@ guis:
         material: BOOK
         name: '&7Question: &f%(question)'
         lore:
-        - '{  &a&l}#question#'
         - ' '
         - '&fThis answer contains &e%(words) &fletters.'
-        - ''
         - '{  &f&o}#contents#{1}'
         - '#more-contents#{1}'
         - ' '
