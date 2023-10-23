@@ -221,8 +221,10 @@ guis:
         material: BOOK
         name: '&7Question: &f%(question)'
         lore:
+        - '{  &a&l}#question#'
         - ' '
         - '&fThis answer contains &e%(words) &fletters.'
+        - ''
         - '{  &f&o}#contents#{1}'
         - '#more-contents#{1}'
         - ' '
@@ -306,8 +308,10 @@ guis:
         material: BOOK
         name: '&7Question: &f%(question)'
         lore:
+        - '{  &a&l}#question#'
         - ' '
         - '&fThis answer contains &e%(words) &fletters.'
+        - ''
         - '{  &f&o}#contents#{1}'
         - '#more-contents#{1}'
         - ' '
