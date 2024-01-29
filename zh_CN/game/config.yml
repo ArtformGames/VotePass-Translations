@@ -1,10 +1,10 @@
 # VotePass-Game-config-分区端配置
 
-# 适用插件版本：1.2.2+ (https://github.com/ArtformGames/VotePass/releases)
+# 适用插件版本：1.3.0+ (https://github.com/ArtformGames/VotePass/releases)
 # 插件作者：ArtformGames (https://github.com/ArtformGames)
 # 插件项目地址：https://github.com/ArtformGames/VotePass
 
-# 简体中文语言版本：1.0.5
+# 简体中文语言版本：1.0.6
 # 简体中文语言工作：MingGre、Sraconni
 # 语言项目地址：https://github.com/ArtformGames/VotePass-Translations
 
@@ -87,6 +87,7 @@ server:
   # 以上示例代表能够参与的投票人数≤5人时，有80%以上的通过票就能够自动结束投票通过白名单,
   # 当 5＜可投票人数≤20 时，通过比率变更为60%
   auto-pass-ratio:
+    '2': '1.0'
     '5': '0.8'
     '20': '0.6'
   # 投票权在线条件

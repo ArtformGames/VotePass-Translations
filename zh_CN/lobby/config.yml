@@ -1,10 +1,10 @@
 # VotePass-Lobby-config-大厅端配置
 
-# 适用插件版本：1.2.0+ (https://github.com/ArtformGames/VotePass/releases)
+# 适用插件版本：1.3.0+ (https://github.com/ArtformGames/VotePass/releases)
 # 插件作者：ArtformGames (https://github.com/ArtformGames)
 # 插件项目地址：https://github.com/ArtformGames/VotePass
 
-# 简体中文语言版本：1.0.4
+# 简体中文语言版本：1.0.6
 # 简体中文语言工作：MingGre、Sraconni
 # 语言项目地址：https://github.com/ArtformGames/VotePass-Translations
 
@@ -76,8 +76,9 @@ rules:
     - '[&c&l[我想拒绝规定]](hover=&f点击&c&l拒绝服务器相关规定&f. run_command=/votepass deny %(server))'
 
 answering:
-  title: '&a&l请求页 &8| &f%(server)'
+  title: '&a&l申请页 &8| &f%(server)'
   book-item:
+    # 将回答用书放在玩家物品栏的哪个位置？ (0~8)
     slot: 8
     name: '&c&l回答用书 &8(右键打开)'
     lore:
@@ -119,3 +120,40 @@ answering:
       - ' '
       - '&f只有在回答完所有问题之后,'
       - '&f才能够提交申请'
+
+resubmit:
+  title: '&a&l申请页 &8| &f%(server)'
+  items:
+    info:
+      material: NAME_TAG
+      name: '&e上一份申请 &8#&f%(id)'
+      lore:
+      - ' '
+      - '&f我们找到了您的上一份申请'
+      - '  &a 赞成 %(approve)'
+      - '  &c 反对 %(reject)'
+      - '  &e 弃权 %(abstain)'
+      - '&7&o或许这封申请并未遭到拒绝,'
+      - '&7&o而是由于在投票的有效时间内未能获得足够的有效投票以判定结果被退回'
+      - ' '
+      - '&e 您想修改您的上一份申请并重新提交吗？'
+      - ' '
+    answers:
+      material: WRITTEN_BOOK
+      name: '&8Q: &f%(question)'
+      lore:
+      - ' '
+      - '#answers#'
+      - ' '
+    confirm:
+      material: EMERALD
+      name: '&a&l是的，我想修改我的上一份申请'
+      lore:
+      - ' '
+      - '&f点击确认并修改您的上一份申请'
+    cancel:
+      material: REDSTONE
+      name: '&c&l不，我想重新创建一份新的申请'
+      lore:
+      - ' '
+      - '&f点击确认并创建一份新的申请'
