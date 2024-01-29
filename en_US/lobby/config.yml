@@ -67,6 +67,7 @@ rules:
 answering:
   title: '&a&lRequest &8| &f%(server)'
   book-item:
+    # Which slot should we put the answering book in players inventory? (0~8)
     slot: 8
     name: '&c&lAnswering book &8(Right click)'
     lore:
@@ -108,3 +109,41 @@ answering:
       - ' '
       - '&fAfter answered all the questions,'
       - '&fthat you can submit your request to the server users.'
+
+resubmit:
+  title: '&a&lRequest &8| &f%(server)'
+  items:
+    info:
+      material: NAME_TAG
+      name: '&ePrevious request &8#&f%(id)'
+      lore:
+      - ' '
+      - '&fWe found a previous request with'
+      - '  &a Approved %(approve)'
+      - '  &c Rejected %(reject)'
+      - '  &e Abstained %(abstain)'
+      - '&7&oMaybe the request wasn''t rejected, '
+      - '&7&obut simply closed automatically because it took too long.'
+      - ' '
+      - '&e Would you like to modify your previous request'
+      - '&e and resubmit it for the next round of voting?'
+      - ' '
+    answers:
+      material: WRITTEN_BOOK
+      name: '&8Q: &f%(question)'
+      lore:
+      - ' '
+      - '#answers#'
+      - ' '
+    confirm:
+      material: EMERALD
+      name: '&a&lYes, I''d like to modify previous request.'
+      lore:
+      - ' '
+      - '&fClick to confirm and modify your previous request.'
+    cancel:
+      material: REDSTONE
+      name: '&c&lNope, create a new request.'
+      lore:
+      - ' '
+      - '&fClick to create your new request.'

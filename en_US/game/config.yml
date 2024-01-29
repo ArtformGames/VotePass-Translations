@@ -59,6 +59,7 @@ server:
   # the vote will be automatically passed, below zero means disabled auto pass.
   # You can configure different ratio based on different size votable players.
   auto-pass-ratio:
+    '2': '1.0'
     '5': '0.8'
     '20': '0.6'
   # Active user last online time
